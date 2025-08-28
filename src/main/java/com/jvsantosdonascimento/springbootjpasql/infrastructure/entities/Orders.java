@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_orders")
@@ -25,5 +27,7 @@ public class Orders {
     @JoinColumn(name = "client_id")
     private Users client;
     private Integer orderStatus;
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
 }
