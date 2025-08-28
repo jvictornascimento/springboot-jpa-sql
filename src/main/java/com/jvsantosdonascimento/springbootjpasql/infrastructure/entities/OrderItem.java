@@ -20,4 +20,7 @@ public class OrderItem {
     private OrderItemPk id = new OrderItemPk();
     private Integer quantity;
     private Double price;
+    public Double getSubTotal(){
+        return price * quantity;
+    }
 }
