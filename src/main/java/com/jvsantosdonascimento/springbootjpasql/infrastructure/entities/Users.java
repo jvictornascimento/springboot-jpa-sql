@@ -2,10 +2,7 @@ package com.jvsantosdonascimento.springbootjpasql.infrastructure.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +10,19 @@ import java.util.List;
 @Entity
 @Table(name = "tb_users")
 @Builder
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     private String name;
+    @NonNull
     private String email;
     private String phone;
+    @NonNull
     private String password;
     @OneToMany(mappedBy = "client")
     @JsonIgnore
