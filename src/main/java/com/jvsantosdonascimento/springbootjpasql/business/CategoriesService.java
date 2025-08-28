@@ -3,12 +3,14 @@ package com.jvsantosdonascimento.springbootjpasql.business;
 import com.jvsantosdonascimento.springbootjpasql.business.mapper.ICategoriesMapper;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.in.CategoryRecord;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.CategoryRecordOut;
+import com.jvsantosdonascimento.springbootjpasql.infrastructure.entities.Category;
 import com.jvsantosdonascimento.springbootjpasql.infrastructure.repositories.CategoriesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.sound.midi.Soundbank;
 import java.util.List;
 
 @Service
@@ -26,7 +28,6 @@ public class CategoriesService {
         return categoriesMapper.fromOut(repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Id: " + id + " not found")));
     }
-
     @Transactional
     public CategoryRecordOut insert(CategoryRecord categoryRecord) {
         return categoriesMapper.fromOut(repository.save(categoriesMapper.fromEntity(categoryRecord)));
@@ -39,5 +40,11 @@ public class CategoriesService {
         } else {
             throw new IllegalStateException("Category cannot be deleted because it has associated products");
         }
+    }
+    @Transactional
+    public CategoryRecordOut update(Long id, CategoryRecord categoryRecord) {
+        var data = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Id: " + id + " not Found"));
+        data.setName(categoryRecord.name() != null ? categoryRecord.name() : data.getName());
+        return categoriesMapper.fromOut(repository.save(data));
     }
 }

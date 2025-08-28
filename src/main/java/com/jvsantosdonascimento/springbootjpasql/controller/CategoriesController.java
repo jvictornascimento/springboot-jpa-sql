@@ -41,4 +41,8 @@ public class CategoriesController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryRecordOut> updateCategory(@PathVariable("id") Long id, @RequestBody CategoryRecord categoryRecord) {
+        return ResponseEntity.ok(service.update(id,categoryRecord));
+    }
 }
