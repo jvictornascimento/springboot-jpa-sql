@@ -24,4 +24,6 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Users client;
+    private Integer orderStatus;
+
 }
