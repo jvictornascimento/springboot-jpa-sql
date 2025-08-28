@@ -31,4 +31,13 @@ public class CategoriesService {
     public CategoryRecordOut insert(CategoryRecord categoryRecord) {
         return categoriesMapper.fromOut(repository.save(categoriesMapper.fromEntity(categoryRecord)));
     }
+    @Transactional
+    public void delete(Long id) {
+        var category = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Id: " + id + " not Found"));
+        if (category.getProducts().isEmpty()) {
+            repository.delete(category);
+        } else {
+            throw new IllegalStateException("Category cannot be deleted because it has associated products");
+        }
+    }
 }

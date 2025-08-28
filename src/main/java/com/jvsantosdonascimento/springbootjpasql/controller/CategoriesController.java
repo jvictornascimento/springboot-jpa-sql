@@ -9,6 +9,7 @@ import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.OrderRecordO
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductRecordOut;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,9 +31,14 @@ public class CategoriesController {
         return ResponseEntity.ok(service.findById(id));
     }
     @PostMapping
-    public ResponseEntity<CategoryRecordOut> insertUser(@RequestBody CategoryRecord categoryRecord) {
+    public ResponseEntity<CategoryRecordOut> insertCategory(@RequestBody CategoryRecord categoryRecord) {
         var newData = service.insert(categoryRecord);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newData.id()).toUri();
         return ResponseEntity.created(uri).body(newData);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable("id") Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
