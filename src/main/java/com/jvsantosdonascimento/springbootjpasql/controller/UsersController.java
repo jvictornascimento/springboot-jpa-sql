@@ -36,4 +36,8 @@ public class UsersController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<UserRecordOut> updateUser(@PathVariable("id") Long id, @RequestBody UserRecord userRecord) {
+        return ResponseEntity.ok(service.update(id,userRecord));
+    }
 }
