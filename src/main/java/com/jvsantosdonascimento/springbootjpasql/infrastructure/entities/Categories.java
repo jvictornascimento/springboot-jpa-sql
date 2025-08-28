@@ -2,10 +2,7 @@ package com.jvsantosdonascimento.springbootjpasql.infrastructure.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_categories")
 @Builder
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Categories {
