@@ -29,4 +29,9 @@ public class UsersService {
     public UserRecordOut insert(UserRecord user) {
         return usersMapper.fromOut(repository.save(usersMapper.fromEntity(user)));
     }
+    @Transactional
+    public void delete(Long id) {
+        var user = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Id: " + id + " Not found"));
+        repository.delete(user);
+    }
 }
