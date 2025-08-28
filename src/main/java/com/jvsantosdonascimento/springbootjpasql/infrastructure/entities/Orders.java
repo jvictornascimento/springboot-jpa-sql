@@ -1,30 +1,27 @@
 package com.jvsantosdonascimento.springbootjpasql.infrastructure.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_orders")
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String email;
-    private String phone;
-    private String password;
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    private List<Orders> orders = new ArrayList<>();
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant moment;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Users client;
 }
