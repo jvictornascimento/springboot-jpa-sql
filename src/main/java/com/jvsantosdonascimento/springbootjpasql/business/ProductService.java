@@ -6,6 +6,7 @@ import com.jvsantosdonascimento.springbootjpasql.controller.dto.in.ProductRecord
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.CategoryRecordOut;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductListAllRecordOut;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductRecordOut;
+import com.jvsantosdonascimento.springbootjpasql.infrastructure.entities.Category;
 import com.jvsantosdonascimento.springbootjpasql.infrastructure.repositories.CategoriesRepository;
 import com.jvsantosdonascimento.springbootjpasql.infrastructure.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,5 +45,24 @@ public class ProductService {
             newProduct.setCategories(new HashSet<>(categories));
         }
         return productMapper.fromOut(repository.save(newProduct));
+    }
+    @Transactional
+    public ProductRecordOut update(Long id, ProductRecord productRecord) {
+        var data = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product id: " + id + " not found."));
+
+        data.setName(productRecord.name() != null ? productRecord.name() : data.getName());
+        data.setDescription(productRecord.description() != null ? productRecord.description() : data.getDescription());
+        data.setPrice(productRecord.price() != null ? productRecord.price() : data.getPrice());
+        data.setImgUrl(productRecord.imgUrl() != null ? productRecord.imgUrl() : data.getImgUrl());
+
+        if (productRecord.categoryIds() != null && !productRecord.categoryIds().isEmpty()) {
+            var listCategory = categoriesRepository.findAllById(productRecord.categoryIds());
+            for (Category c : listCategory) {
+                data.getCategories().add(c);
+            }
+        }
+
+        return productMapper.fromOut(repository.save(data));
     }
 }

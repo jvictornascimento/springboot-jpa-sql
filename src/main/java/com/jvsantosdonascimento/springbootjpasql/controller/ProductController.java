@@ -31,9 +31,13 @@ public class ProductController {
         return ResponseEntity.ok(service.findById(id));
     }
     @PostMapping
-    public ResponseEntity<ProductRecordOut> insertUser(@RequestBody ProductRecord productRecord) {
+    public ResponseEntity<ProductRecordOut> insertProduct(@RequestBody ProductRecord productRecord) {
         var newData = service.insert(productRecord);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newData.id()).toUri();
         return ResponseEntity.created(uri).body(newData);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductRecordOut> updateProduct(@PathVariable("id") Long id, @RequestBody ProductRecord productRecord) {
+        return ResponseEntity.ok(service.update(id, productRecord));
     }
 }
