@@ -1,10 +1,7 @@
 package com.jvsantosdonascimento.springbootjpasql.infrastructure.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.Set;
 @Table(name = "tb_products")
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -27,7 +25,7 @@ public class Product {
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Categories> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
 }
