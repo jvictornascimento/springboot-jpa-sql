@@ -5,6 +5,7 @@ import com.jvsantosdonascimento.springbootjpasql.business.ProductService;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.in.ProductRecord;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.in.UserRecord;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.CategoryRecordOut;
+import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductListAllRecordOut;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductRecordOut;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.UserRecordOut;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    public ResponseEntity<List<ProductRecordOut>> findAll() {
+    public ResponseEntity<List<ProductListAllRecordOut>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
     @GetMapping("/{id}")

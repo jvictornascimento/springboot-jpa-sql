@@ -4,6 +4,7 @@ import com.jvsantosdonascimento.springbootjpasql.business.mapper.ICategoriesMapp
 import com.jvsantosdonascimento.springbootjpasql.business.mapper.IProductMapper;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.in.ProductRecord;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.CategoryRecordOut;
+import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductListAllRecordOut;
 import com.jvsantosdonascimento.springbootjpasql.controller.dto.out.ProductRecordOut;
 import com.jvsantosdonascimento.springbootjpasql.infrastructure.repositories.CategoriesRepository;
 import com.jvsantosdonascimento.springbootjpasql.infrastructure.repositories.ProductRepository;
@@ -23,9 +24,9 @@ public class ProductService {
     private final CategoriesRepository categoriesRepository;
     private final IProductMapper productMapper;
 
-    public List<ProductRecordOut> findAll() {
+    public List<ProductListAllRecordOut> findAll() {
         return repository.findAll().stream().
-                map(productMapper::fromOut)
+                map(productMapper::fromOutList)
                 .toList();
     }
     public ProductRecordOut findById(Long id) {
